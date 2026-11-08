@@ -306,8 +306,8 @@ section{position:relative;padding:clamp(56px,6vw,88px) 0}
 .logos:hover .ltrack{animation-play-state:paused}
 .lbox{flex:none;display:grid;place-items:center;width:230px;height:120px;border-radius:20px;background:var(--card);border:1px solid var(--line);transition:border-color .4s,background .4s}
 .lbox:hover{border-color:rgba(94,225,255,.35);background:#0e1628}
-.lg{display:block;background:var(--logo);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat;transition:background .4s}
-.lbox:hover .lg{background:#fff}
+.lg{display:block;object-fit:contain;filter:brightness(0) invert(1);opacity:.5;transition:opacity .4s;-webkit-user-drag:none;user-select:none}
+.lbox:hover .lg{opacity:1}
 
 /* FAQ */
 .faq-g{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px}
@@ -891,9 +891,9 @@ var co=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
   function dim(r){return r>4?34:r>2.8?42:r>1.6?52:64}
   function fill(id,list,hidden){
     var t=$(id);list.forEach(function(l){
-      var b=el("div","lbox"),s=el("span","lg"),h=dim(l.r);
-      s.style.height=h+"px";s.style.width=Math.min(180,Math.round(h*l.r))+"px";s.style.setProperty("--m",'url("'+l.src+'")');
-      if(!hidden){b.setAttribute("role","listitem");s.setAttribute("role","img");s.setAttribute("aria-label",l.n)}
+      var b=el("div","lbox"),s=el("img","lg"),h=dim(l.r);
+      s.style.height=h+"px";s.style.width=Math.min(180,Math.round(h*l.r))+"px";s.src=l.src;s.decoding="async";s.draggable=false;
+      if(!hidden){b.setAttribute("role","listitem");s.alt=l.n}else{s.alt=""}
       b.appendChild(s);t.appendChild(b);
     });
   }
